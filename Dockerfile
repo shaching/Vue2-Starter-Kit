@@ -1,11 +1,15 @@
 # build stage
-FROM node:10.15.0-alpine AS build-env
-MAINTAINER Johnny Chu <chuhsun@gmail.com>
+FROM node:10.15.3-alpine AS build-env
 ADD . /data
-RUN cd /data && yarn install && yarn lint && yarn prod && rm -rf src/ && rm -rf dist/*.map && rm -rf webpack.*
+RUN cd /data
+RUN yarn install
+RUN yarn lint
+RUN yarn prod
+RUN rm -rf dist/*.js.map
+RUN yarn install --production
 
 # final stage
-FROM node:10.15.0-alpine
+FROM node:10.15.3-alpine
 WORKDIR /app
 COPY --from=build-env /data/package.json /app
 COPY --from=build-env /data/dist /app/dist
