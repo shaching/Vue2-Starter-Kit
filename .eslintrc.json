@@ -15,10 +15,13 @@
   },
   "extends": [
     "airbnb-base",
-    "plugin:vue/essential"
+    "plugin:vue/essential",
+    "plugin:prettier/recommended",
+    "prettier/vue"
   ],
   "plugins": [
-    "vue"
+    "vue",
+    "prettier"
   ],
   "settings": {
     "import/resolver": {
@@ -26,5 +29,9 @@
         "config": "webpack.common.js"
       }
     }
+  },
+  "rules": {
+    "no-console": "off",
+    "prettier/prettier": "error"
   }
 }
