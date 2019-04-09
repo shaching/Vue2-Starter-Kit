@@ -6,23 +6,12 @@
           <v-toolbar-title>Login form</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-          <v-text-field prepend-icon="email"
-                        name="email"
-                        label="123@gmail.com"
-                        type="text"
-                        v-model="email"
-                        required>
+          <v-text-field prepend-icon="email" name="email" label="123@gmail.com" type="text" v-model="email" required>
           </v-text-field>
-          <v-text-field prepend-icon="lock"
-                        name="password"
-                        label="123456"
-                        type="password"
-                        v-model="password"
-                        required>
+          <v-text-field prepend-icon="lock" name="password" label="123456" type="password" v-model="password" required>
           </v-text-field>
 
-          <div v-if="isSignIn">{{goToUrlWithReplace("hello")}}</div>
-
+          <div v-if="isSignIn">{{ goToUrlWithReplace('hello') }}</div>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -39,19 +28,10 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'SignIn',
   methods: {
-    ...mapActions([
-      'signInAction',
-      'setEmailAction',
-      'setPasswordAction',
-      'goToUrlWithReplace',
-    ]),
+    ...mapActions(['signInAction', 'setEmailAction', 'setPasswordAction', 'goToUrlWithReplace']),
   },
   computed: {
-    ...mapGetters([
-      'getSignInRequest',
-      'getSignInResponse',
-      'isSignIn',
-    ]),
+    ...mapGetters(['getSignInRequest', 'getSignInResponse', 'isSignIn']),
     email: {
       get() {
         return this.getSignInRequest.email;

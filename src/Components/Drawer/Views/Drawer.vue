@@ -1,10 +1,5 @@
 <template>
-  <v-navigation-drawer
-      v-model="isActive"
-      fixed
-      right
-      app
-  >
+  <v-navigation-drawer v-model="isActive" fixed right app>
     <v-list dense>
       <v-list-tile>
         <v-list-tile-action>
@@ -28,7 +23,6 @@
           </v-list-tile-content>
         </router-link>
       </v-list-tile>
-
     </v-list>
   </v-navigation-drawer>
 </template>

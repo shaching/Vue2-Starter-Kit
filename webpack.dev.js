@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const path = require('path');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 
@@ -18,22 +17,5 @@ module.exports = merge(common, {
     open: false,
     writeToDisk: true,
     port: 8080,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(sa|sc|c)ss$/,
-        include: [
-          path.resolve('src'),
-          path.resolve('node_modules/vuetify/'),
-          path.resolve('node_modules/material-design-icons-iconfont/'),
-          path.resolve('node_modules/@fortawesome/'),
-        ],
-        use: [
-          'vue-style-loader',
-          'css-loader',
-        ],
-      },
-    ],
   },
 });

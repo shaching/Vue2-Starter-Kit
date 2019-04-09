@@ -3,11 +3,13 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { isProduction } = require('webpack-mode');
 
 module.exports = {
   entry: {
-    main: ['@babel/polyfill', './src/index.js'],
+    main: ['@babel/polyfill/noConflict', './src/index.js'],
   },
   resolve: {
     extensions: ['.js', '.vue', '.json', '.css'],
@@ -53,6 +55,16 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        include: [
+          path.resolve('src'),
+          path.resolve('node_modules/vuetify/'),
+          path.resolve('node_modules/material-design-icons-iconfont/'),
+          path.resolve('node_modules/@fortawesome/'),
+        ],
+        use: [isProduction ? MiniCssExtractPlugin.loader : 'vue-style-loader', 'css-loader'],
       },
     ],
   },
@@ -100,10 +112,12 @@ module.exports = {
     }),
     new FileManagerPlugin({
       onStart: {
-        delete: [
-          './dist/',
-        ],
+        delete: ['./dist/'],
       },
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
     }),
   ],
 };

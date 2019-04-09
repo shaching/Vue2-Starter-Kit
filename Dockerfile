@@ -16,5 +16,7 @@ COPY --from=build-env /data/package.json /app
 COPY --from=build-env /data/dist /app/dist
 COPY --from=build-env /data/server /app/server
 COPY --from=build-env /data/node_modules /app/node_modules
+RUN chown -R node:node /app
+USER node
 EXPOSE 8080
 CMD [ "yarn", "server" ]

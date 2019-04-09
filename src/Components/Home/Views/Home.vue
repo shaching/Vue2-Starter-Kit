@@ -15,7 +15,6 @@
     </v-content>
 
     <Footer></Footer>
-
   </v-app>
 </template>
 
