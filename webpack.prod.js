@@ -1,7 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const merge = require('webpack-merge');
-const TerserWebpackPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const JsonMinimizerPlugin = require('json-minimizer-webpack-plugin');
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -11,14 +12,18 @@ module.exports = merge(common, {
     chunkFilename: '[id].[chunkhash].js',
   },
   optimization: {
+    minimize: true,
     minimizer: [
-      new TerserWebpackPlugin({
+      new CssMinimizerPlugin({
         cache: true,
         parallel: true,
         sourceMap: true,
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new HtmlMinimizerPlugin({
+        parallel: true,
+      }),
+      new JsonMinimizerPlugin(),
     ],
   },
-  devtool: '#source-map',
+  devtool: 'source-map',
 });

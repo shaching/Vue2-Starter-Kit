@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
@@ -7,7 +7,7 @@ module.exports = merge(common, {
   output: {
     filename: '[name].bundle.js',
   },
-  devtool: '#eval-source-map',
+  devtool: 'eval-source-map',
   devServer: {
     compress: true,
     contentBase: 'dist',

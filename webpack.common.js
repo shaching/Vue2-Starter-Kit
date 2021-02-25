@@ -6,10 +6,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { isProduction } = require('webpack-mode');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: ['@babel/polyfill/noConflict', './src/index.js'],
+    main: ['@babel/polyfill/noConflict', './src/main.js'],
   },
   resolve: {
     extensions: ['.js', '.vue', '.json', '.css'],
@@ -21,32 +22,20 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: /\.(vue|js)$/,
-        include: [path.resolve('src')],
-        exclude: [path.resolve('node_modules')],
-        loader: 'eslint-loader',
-      },
-      {
         test: /\.vue$/,
-        include: [path.resolve('src')],
-        exclude: [path.resolve('node_modules')],
+        include: path.resolve('src'),
+        exclude: /node_modules/,
         loader: 'vue-loader',
       },
       {
-        test: /\.js$/,
-        include: [path.resolve('src')],
-        exclude: [path.resolve('node_modules')],
+        test: /\.m?js$/,
+        include: path.resolve('src'),
+        exclude: /node_modules/,
         loader: 'babel-loader',
       },
       {
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)(\?.+)?$/,
-        include: [
-          path.resolve('src'),
-          path.resolve('node_modules/vuetify/'),
-          path.resolve('node_modules/material-design-icons-iconfont/'),
-          path.resolve('node_modules/@fortawesome/'),
-        ],
+        include: path.resolve('src'),
         use: [
           {
             loader: 'url-loader',
@@ -58,13 +47,18 @@ module.exports = {
       },
       {
         test: /\.(sa|sc|c)ss$/,
-        include: [
-          path.resolve('src'),
-          path.resolve('node_modules/vuetify/'),
-          path.resolve('node_modules/material-design-icons-iconfont/'),
-          path.resolve('node_modules/@fortawesome/'),
+        include: [path.resolve('src'), path.resolve('node_modules/vuetify/dist/')],
+        use: [
+          isProduction
+            ? {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  publicPath: '',
+                },
+              }
+            : 'vue-style-loader',
+          'css-loader',
         ],
-        use: [isProduction ? MiniCssExtractPlugin.loader : 'vue-style-loader', 'css-loader'],
       },
     ],
   },
@@ -111,13 +105,16 @@ module.exports = {
       template: 'index.html',
     }),
     new FileManagerPlugin({
-      onStart: {
-        delete: ['./dist/'],
+      events: {
+        onStart: {
+          delete: ['./dist/'],
+        },
       },
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[hash].css',
       chunkFilename: '[id].[hash].css',
     }),
+    new ESLintPlugin(),
   ],
 };

@@ -17,7 +17,7 @@
     "airbnb-base",
     "plugin:vue/essential",
     "plugin:prettier/recommended",
-    "prettier/vue"
+    "@vue/prettier"
   ],
   "plugins": [
     "vue",
@@ -32,6 +32,18 @@
   },
   "rules": {
     "no-console": "off",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        "js": "never",
+        "mjs": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never",
+        "vue": "never"
+      }
+    ]
   }
 }

@@ -1,4 +1,4 @@
-import router from '@/Router';
+import router from '@/router';
 import MutationsType from './MutationsType';
 
 export default {

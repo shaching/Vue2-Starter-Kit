@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const fs = require('fs');
 const path = require('path');
 const Koa = require('koa');
@@ -15,7 +16,7 @@ const SERVE_OPTIONS = {
 const buildFolder = path.resolve('dist');
 
 const root = new Router();
-root.get('*', async (ctx) => {
+root.get('(.*)', async (ctx) => {
   ctx.type = 'html';
   ctx.body = fs.createReadStream(`${buildFolder}/index.html`);
 });
