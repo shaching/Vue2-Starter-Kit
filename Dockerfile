@@ -1,5 +1,5 @@
 # build stage
-FROM node:14.15.5-alpine3.13 AS build-env
+FROM node:14.17.0-alpine3.13 AS build-env
 ADD . /data
 WORKDIR /data
 RUN yarn install
@@ -10,7 +10,7 @@ RUN rm -rf node_modules/
 RUN yarn install --production
 
 # final stage
-FROM node:14.15.5-alpine3.13
+FROM node:14.17.0-alpine3.13
 WORKDIR /app
 COPY --from=build-env /data/package.json /app
 COPY --from=build-env /data/dist /app/dist
