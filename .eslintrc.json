@@ -17,11 +17,14 @@
     "airbnb-base",
     "plugin:vue/essential",
     "plugin:prettier/recommended",
+    "plugin:import/recommended",
     "@vue/prettier"
   ],
   "plugins": [
     "vue",
-    "prettier"
+    "prettier",
+    "html",
+    "import"
   ],
   "settings": {
     "import/resolver": {
